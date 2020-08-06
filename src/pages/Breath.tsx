@@ -1,11 +1,13 @@
 import React, { ReactElement, useState, useEffect } from 'react';
-import { IonPage, IonText, IonButton } from '@ionic/react';
+import { IonPage, IonText, IonButton, IonContent, IonToolbar } from '@ionic/react';
 import { connect } from 'react-redux';
-import { RootState, ThunkDispatchType, actions, Session } from '../store';
+import { RouteComponentProps } from 'react-router';
 import { bindActionCreators } from 'redux';
+import { RootState, ThunkDispatchType, actions, Session } from '../store';
 import classes from './Breath.module.css';
 import Timer from '../components/common/Timer';
-import { RouteComponentProps } from 'react-router';
+import { getRandomQuote } from '../store/session/actions';
+import Toolbar from '../components/common/Toolbar';
 
 interface ReduxStateProps {
   current: Session;
@@ -31,17 +33,32 @@ type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchT
 
 export const Breath = ({ current, startSession, history }: Props): ReactElement => {
 
-  const [breathIn, setBreathIn] = useState(true)
+  const [breathIn, setBreathIn] = useState(true);
+  const [timerOn, setTimerOn] = useState(false);
+  const [quote, setQuote] = useState({quote: '', author: ''});
 
   useEffect(() => {
-    if(current.sessionStarted && !current.sessionFinished) {
-      setTimeout(() => { setBreathIn(!breathIn)}, 4000)
+    if(current.sessionStarted) {
+      console.log('start breathiing')
+      setTimeout(() => { setBreathIn(!breathIn)}, 4000);
     }
-  },[breathIn, current.sessionStarted, current.sessionFinished]);
+  },[breathIn, current.sessionStarted]);
+
+  useEffect(() => {
+    if(current.sessionStarted) {
+      setTimerOn(true)
+    }
+  }, [current.sessionStarted])
+
+  useEffect(() => {
+    getRandomQuote()
+    .then((data) => setQuote(data))
+  }, [])
 
   const handleBreathDone = () => {
-    if (current.sessionStarted) {
-      history.push('/home')
+    if (current.sessionStarted && timerOn) {
+      setTimerOn(false);
+      history.push('/journal')
     }
   }
 
@@ -62,11 +79,17 @@ export const Breath = ({ current, startSession, history }: Props): ReactElement 
 
   const renderBreathing = (): ReactElement => (
     <>
+      {quote.quote !== '' && 
+        <div className={classes.container}>
+          <div className={classes.quote}>{quote.quote}</div>
+          <div className={classes.author}>{quote.author}</div>
+        </div>
+      }
       <div className={classes.container}>
         <IonText>{breathIn ? 'Breath In...' : 'Breath Out...'}</IonText>
       </div>
 
-      <div>
+      <div className={classes.center}>
         <div className={classes.cloneCircleContainer}>
             <div className={`${ classes.circle} ${classes.circleClone}
             ${breathIn ? classes.scaleIn : classes.scaleOut}`}
@@ -93,7 +116,7 @@ export const Breath = ({ current, startSession, history }: Props): ReactElement 
               style={{animationDelay: '2.0s'}}/>
           </div>
         <div className={classes.circle}>
-          <Timer mins={1} timerFinished={handleBreathDone}/>
+          {timerOn && <Timer mins={current.sessionTime} timerFinished={handleBreathDone}/>}
         </div>
       </div>
     </>
@@ -101,12 +124,15 @@ export const Breath = ({ current, startSession, history }: Props): ReactElement 
 
   return (
     <IonPage>
-      <div className={classes.pageContainer}>
-        <div>
-          {current.sessionStarted && renderBreathing()}
-          {!current.sessionStarted && renderStartButton()}
+      <Toolbar blank rightButtons={<IonButton onClick={handleBreathDone}>Cancel</IonButton>}/>
+      <IonContent>
+        <div className={classes.pageContainer}>
+          <div>
+            {timerOn && renderBreathing()}
+            {!current.sessionStarted && renderStartButton()}
+          </div>
         </div>
-      </div>
+      </IonContent>
     </IonPage>
   )
 }

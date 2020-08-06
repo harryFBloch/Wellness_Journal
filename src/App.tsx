@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, IonContent } from '@ionic/react';
+import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import firebase from './config/FirebaseConfig';
 import 'firebase/auth';
@@ -28,6 +28,9 @@ import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 import GetMood from './pages/GetMood';
 import Breath from './pages/Breath';
+import Stats from './pages/Stats';
+import RightMenu from './components/RightMenu';
+import Journal from './pages/Journal';
 
 
 const App: React.FC = () => {
@@ -49,20 +52,21 @@ const App: React.FC = () => {
   <Provider store={store}>
     <IonApp>
       <IonReactRouter>
-      <IonContent id="main" forceOverscroll={false}>
         <AdMobContainer />
-        {/* <InAppPurchase /> */}
+        <InAppPurchase />
         <LeftMenu />
-        <IonRouterOutlet id="main">
+        <RightMenu />
+        <IonRouterOutlet id="main" draggable={false}>
           <PrivateRoute path="/home" component={Home} exact={true} />
           <PrivateRoute path="/getmood" component={GetMood} exact={true} />
           <PrivateRoute path="/breath" component={Breath} exact={true} />
+          <PrivateRoute path="/sessions/:id" component={Stats}/>
+          <PrivateRoute path="/journal" component={Journal} exact/>
           <PublicRoute path="/login" component={Login} />
           <PublicRoute path="/terms" component={Terms} />
           <PublicRoute path="/privacy" component={Privacy} />
           <Route exact path="/" render={() => <Redirect to="/home" />} />
         </IonRouterOutlet>
-        </IonContent>
       </IonReactRouter>
     </IonApp>
   </Provider>

@@ -18,18 +18,18 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-secondary-contrast-rgb: rgb(185, 63, 36);
 
   /** tertiary **/
-  --ion-color-tertiary: #5260ff;
-  --ion-color-tertiary-rgb: 82, 96, 255;
-  --ion-color-tertiary-contrast: #ffffff;
-  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
-  --ion-color-tertiary-shade: #4854e0;
-  --ion-color-tertiary-tint: #6370ff;
+  --ion-color-tertiary: #F8EFD4;
+  --ion-color-tertiary-rgb: rgb(248, 239, 212);
+  --ion-color-tertiary-contrast: #D08A4A;
+  --ion-color-tertiary-contrast-rgb: rgb(208, 138, 74);
+  --ion-color-tertiary-shade: #a59f8f;
+  --ion-color-tertiary-tint: #a59f8f;
 
   /** success **/
-  --ion-color-success: #2dd36f;
-  --ion-color-success-rgb: 45, 211, 111;
-  --ion-color-success-contrast: #ffffff;
-  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success: #B93F24;
+  --ion-color-success-rgb: rgb(185, 63, 36);
+  --ion-color-success-contrast: #8E9CA3;
+  --ion-color-success-contrast-rgb: rgb(142, 156, 163);
   --ion-color-success-shade: #28ba62;
   --ion-color-success-tint: #42d77d;
 

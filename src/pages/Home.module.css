@@ -2,6 +2,9 @@
   width: 100%;
   height: 100%;
   padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button { 
@@ -49,4 +52,50 @@
 
 .lineThrough {
   text-decoration: line-through;
+}
+
+.container {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.statRow {
+  width: 100%;
+  display: flex;
+}
+
+.stat {
+  width: 50%;
+  color: var(--brown);
+  padding: 16px;
+}
+
+.statNumber {
+  display: flex;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.statTitle {
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.graphContainer {
+  width: 100%;
+}
+
+.message {
+  font-size: 32px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  color: var(--red)
+}
+
+.bold {
+  font-weight: bold;
+  font-size: 20px;
 }

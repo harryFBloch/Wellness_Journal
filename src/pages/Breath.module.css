@@ -1,3 +1,19 @@
+.quote {
+  font-size: 24px;
+  color: var(--brown);
+}
+
+.author {
+  font-size: 16px;
+  color: var(--brown);
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
 .circle {
   width: 250px;
   height: 250px;
@@ -22,7 +38,7 @@
 }
 
 .cloneCircleContainer {
-  z-index: -1;
+  z-index: 0;
 }
 
 .scaleIn {
